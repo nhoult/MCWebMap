@@ -146,6 +146,30 @@
       <scope>provided</scope>
     </dependency>
     -->
+
+    <dependency>
+       <groupId>org.vaadin.addons</groupId>
+       <artifactId>icepush</artifactId>
+       <version>0.2.1</version>
+    </dependency>
+<!--
+    <dependency>
+       <groupId>org.icepush</groupId>
+       <artifactId>icepush-gwt</artifactId>
+       <version>0.2.1</version>
+    </dependency>
+    <dependency>
+       <groupId>org.icepush</groupId>
+       <artifactId>icepush-common</artifactId>
+       <version>0.2.1</version>
+    </dependency>
+-->
+    <dependency>
+    	<groupId>log4j</groupId>
+    	<artifactId>log4j</artifactId>
+    	<version>1.2.12</version>
+    	<optional>false</optional>
+    </dependency>
   </dependencies>
 
 </project>
