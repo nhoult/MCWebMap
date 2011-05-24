@@ -6,6 +6,7 @@ import mcwebmap.logic.MapImageGenerator;
 
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.Runo;
 
 public class QueueGUI 

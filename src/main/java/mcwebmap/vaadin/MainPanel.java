@@ -60,15 +60,14 @@ implements MapGenQueueCB
 
 	// callback of processing list
 	public void setWaitingQueue(final List<MapImageGenerator> processQueue) {
-		queueList.setQueue(processQueue);
-
+		queueList.setWaitingQueue(processQueue);
 		application.update();
-
 		System.out.println("Maps waiting:"+processQueue.size());
 	}
 
 	public void setProcessingQueue(List<MapImageGenerator> processQueue) {
-		// TODO: make a place for maps being rendered
+		queueList.setProcessingQueue(processQueue);
+		application.update();
 		System.out.println("Maps being processed:"+processQueue.size());
 	}
 }

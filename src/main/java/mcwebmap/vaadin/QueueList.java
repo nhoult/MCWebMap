@@ -2,45 +2,39 @@ package mcwebmap.vaadin;
 
 import java.util.List;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
-
+import mcwebmap.logic.MapGenQueueCB;
 import mcwebmap.logic.MapImageGenerator;
 
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.themes.Runo;
 
+
+
+
+// right side of main layout
 public class QueueList 
 extends Panel
+implements MapGenQueueCB
 {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
 	
-	// right side of main layout
-	private GridLayout statLayout = new GridLayout(2,1);
-	private Label labelQueue = new Label("Waiting in Queue: ");
-	private Label labelQueueValue = new Label("0");
+	private QueueTable processingQueue = new QueueTable();
+	private QueueTable waitingQueue = new QueueTable();
 	
-	public void QueueList(){
-		//addStyleName(Runo.PANEL_LIGHT);
+	public QueueList(){
+		processingQueue.setHeight("100px");
 		
-		this.addComponent(statLayout);
-		statLayout.addComponent(labelQueue,      0, 0);
-		statLayout.addComponent(labelQueueValue, 1, 0);
+		this.addComponent(processingQueue);
+		this.addComponent(waitingQueue);
 	}
-	
-	public void setQueue(final List<MapImageGenerator> processQueue){
-		this.removeAllComponents();
-		
-		this.addComponent(statLayout);
-		labelQueueValue.setValue(processQueue.size());
-		
-		for(MapImageGenerator mig: processQueue){
-			this.addComponent(new QueueGUI(mig));
-		}
+
+	public void setWaitingQueue(final List<MapImageGenerator> processQueue) {
+		waitingQueue.setQueue(processQueue);
+	}
+
+	public void setProcessingQueue(final List<MapImageGenerator> processQueue) {
+		processingQueue.setQueue(processQueue);
 	}
 	
 }
