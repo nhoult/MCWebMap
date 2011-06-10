@@ -31,7 +31,6 @@ implements TransactionListener
 	
 	// I want to notify the clients if I want an update
 	private ICEPush pusher = new ICEPush();
-	//private static ThreadLocal<ICEPush> currentPusher = new ThreadLocal<ICEPush>();//new ICEPush();
 	
 	// thread global var
 	private static ThreadLocal<MCWebMapApplication> currentApplication = new ThreadLocal<MCWebMapApplication> ();
@@ -66,8 +65,6 @@ implements TransactionListener
 	@Override
 	public void init() {
 		logger.debug("init()");
-		//ICEPush pusher = new ICEPush();
-		//currentPusher.set(pusher);
 		// create our tab sheet:
 		MainTabs.create(this);
 		TabSheet tabsheet = MainTabs.getTabSheet(); // get our tab sheet to use later
@@ -84,11 +81,7 @@ implements TransactionListener
 
 		setMainWindow(mainWindow);
 		
-		mp.addComponent(pusher);
-		//mainWindow.addComponent(pusher);
-		//pusher.setVisible(false);
-		//pusher.setWidth("0px");
-		
+		mp.addComponent(pusher);		
 	}
 
 	public void addTab(Component c, boolean closeable){
@@ -102,7 +95,6 @@ implements TransactionListener
 	public void update(){
 		logger.debug("Sending update request to client");
 		// Push the changes
-		//ICEPush pusher = currentPusher.get();
 		synchronized(this){
 			pusher.push();
 		}

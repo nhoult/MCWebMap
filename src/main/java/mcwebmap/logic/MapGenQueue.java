@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 
@@ -84,6 +83,14 @@ public class MapGenQueue
 	public void updateProcessingQueue(){
 		// the assumption is if there is a call to setWaitingQueue() that the 
 		// processing queue has changed
+		List<MapImageGenerator> busyList = getProcessingQueue();
+		
+		for(MapGenQueueCB cb: this.callbacks){
+			cb.setProcessingQueue(busyList);
+		}
+	}
+	
+	public final List<MapImageGenerator> getProcessingQueue(){
 		List<MapImageGenerator> busyList = new ArrayList<MapImageGenerator>();
 		for(MapGenThread thread: threads){
 			MapImageGenerator tmpMIG = thread.getMapImageGenerator();
@@ -91,10 +98,7 @@ public class MapGenQueue
 				busyList.add(tmpMIG);
 			}
 		}
-		
-		for(MapGenQueueCB cb: this.callbacks){
-			cb.setProcessingQueue(busyList);
-		}
+		return busyList;
 	}
 	
 	// notify everyone the queue has changed
@@ -104,8 +108,9 @@ public class MapGenQueue
 				cb.setWaitingQueue(processQueue);
 			}
 		}
-		
-		
-
+	}
+	
+	public final List<MapImageGenerator> getWaitingQueue(){
+		return processQueue;
 	}
 }

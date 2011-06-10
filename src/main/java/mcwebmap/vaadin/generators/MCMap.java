@@ -130,4 +130,10 @@ extends VaadinGenerator
 	public GridLayout getOptionsGridLayout() {
 		return optionsLayout;
 	}
+
+
+	@Override
+	public String getTabTitle() {
+		return "mcmap";
+	}
 }

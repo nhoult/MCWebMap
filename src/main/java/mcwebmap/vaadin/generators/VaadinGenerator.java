@@ -14,6 +14,8 @@ public abstract class VaadinGenerator {
 	
 	public abstract GridLayout getOptionsGridLayout();
 	
+	public abstract String getTabTitle();
+	
 	//public abstract Panel getQueueInfo();
 	
 	public MapImageGenerator getMapImageGenerator(){
