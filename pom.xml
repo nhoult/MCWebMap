@@ -6,7 +6,7 @@
   <artifactId>MCMap</artifactId>
   <packaging>war</packaging>
   <version>1.0</version>
-  <name>Mincraft Map Viewer Web Application</name>
+  <name>Minecraft Map Viewer Web Application</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,8 +19,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.6</source>
+          <target>1.6</target>
         </configuration>
       </plugin>
 
@@ -106,31 +106,6 @@
     </repository>
   </repositories>
 
-  <!--
-  <pluginRepositories>
-    <pluginRepository>
-      <id>codehaus-snapshots</id>
-      <url>http://nexus.codehaus.org/snapshots</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-    <pluginRepository>
-      <id>vaadin-snapshots</id>
-      <url>http://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-  -->
-
   <dependencies>
     <dependency>
       <groupId>com.vaadin</groupId>
@@ -152,18 +127,7 @@
        <artifactId>icepush</artifactId>
        <version>0.2.1</version>
     </dependency>
-<!--
-    <dependency>
-       <groupId>org.icepush</groupId>
-       <artifactId>icepush-gwt</artifactId>
-       <version>0.2.1</version>
-    </dependency>
-    <dependency>
-       <groupId>org.icepush</groupId>
-       <artifactId>icepush-common</artifactId>
-       <version>0.2.1</version>
-    </dependency>
--->
+
     <dependency>
     	<groupId>log4j</groupId>
     	<artifactId>log4j</artifactId>

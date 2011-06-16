@@ -37,7 +37,9 @@ implements TransactionListener
 	
 	// should be shared between all users
 	private static Properties properties = new Properties();
-	private static String propFile = "MCWebMap.properties";
+	private static String externalPropFile = "MCWebMap.properties";
+	private static String internalPropFile = "DefaultMCWebMap.properties";
+	
 	private static final MapGenQueue mgf = new MapGenQueue();
 	
 	public MCWebMapApplication()
@@ -50,14 +52,35 @@ implements TransactionListener
 		// on upgrade, perhaps putting it some palace that is cross web server
 		// supported?
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream stream = classLoader.getResourceAsStream(propFile);
+		InputStream stream = classLoader.getResourceAsStream(internalPropFile);
 		if (stream == null) {
-			logger.debug("File "+propFile+" not found");
-			throw new Exception("File "+propFile+" not found");
+			logger.debug("File "+internalPropFile+" not found");
+			throw new Exception("File "+internalPropFile+" not found");
 		} else {
 			properties.load(stream);
 		} 
-
+		
+		ClassLoader globalClassLoader = this.getClass().getClassLoader();
+		// now see if there is an external one and override/add
+		// to the internal properties
+		stream = globalClassLoader.getResourceAsStream(externalPropFile);
+		if (stream == null) {
+			logger.warn("File "+externalPropFile+" not found, using all defaults");
+			System.out.println("File "+externalPropFile+" not found, using all defaults");
+		} else {
+			Properties tmpProperties = new Properties();
+			tmpProperties.load(stream);
+//			System.out.println("#########");
+//			tmpProperties.list(System.out);
+//			System.out.println("#########");
+			
+			properties.putAll(tmpProperties);
+//			System.out.println("#########");
+//			properties.list(System.out);
+//			System.out.println("#########");
+		}
+		
+		System.out.println("Done loading");
 		
 		mgf.init(properties);
 	}
