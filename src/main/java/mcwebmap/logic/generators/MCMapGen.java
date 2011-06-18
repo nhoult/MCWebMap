@@ -17,11 +17,25 @@ public class MCMapGen
 extends MapImageGenerator
 {
 	private Logger logger = Logger.getLogger(this.getClass().getName());
+	
+	public static final int DIR_NORTH = 0;
+	public static final int DIR_SOUTH = 1;
+	public static final int DIR_EAST = 2;
+	public static final int DIR_WEST = 3;
+	
 	private int centerX = 0;
 	private int centerY = 0;
 	private int width = 0;
 	private int height = 0;
-
+	private boolean cave = false;
+	private boolean blendcave = false;    
+	private boolean night = false;    
+	private boolean skylight = false; 
+	private int min = 0;
+	private int max = 127;                
+	private int direction = 0;
+	
+	
 	private String mcmapBin;
 	private String tmpDir; 
 	
@@ -35,7 +49,14 @@ extends MapImageGenerator
 			int centerX,
 			int centerY,
 			int width,
-			int height)
+			int height,
+			boolean cave,
+			boolean blendcave,    
+			boolean night,    
+			boolean skylight, 
+			int min,
+			int max,                
+			int direction)
 	{
 		this.mcmapBin = mcmapBin;
 		this.tmpDir = tmpDir;
@@ -44,6 +65,15 @@ extends MapImageGenerator
 		this.centerY = centerY;
 		this.width = width;
 		this.height = height;
+		
+		this.cave = cave;
+		this.blendcave = blendcave;    
+		this.night = night;    
+		this.skylight = skylight; 
+		this.min = min;
+		this.max = max;                
+		this.direction = direction;
+		
 	}
 	
 	@Override
@@ -52,15 +82,51 @@ extends MapImageGenerator
 	{
 		String mapName = tmpDir+"/"+getTabTitle();
 		
-		String cmd = mcmapBin + 
-		" -file " + mapName + 
-		" -from "+(centerX - (width/2))+" "+ (centerY - (height/2)) +
-		" -to "  +(centerX + (width/2))+" "+ (centerY + (height/2)) + 
-		" " + mapDir;
+		StringBuilder cmd = new StringBuilder(); 
+		cmd.append(mcmapBin); 
+		cmd.append(" -file " + mapName);
+		cmd.append(" -from "+(centerX - (width/2))+" "+ (centerY - (height/2)) );
+		cmd.append(" -to "  +(centerX + (width/2))+" "+ (centerY + (height/2)));
+		if(cave){
+			cmd.append(" -cave");
+		}
+		  
+		  if(blendcave){
+			  cmd.append(" -blendcave"); 
+		  }
+		  
+		  if(night){
+			  cmd.append(" -night");  
+		  }
+		  
+		  if(skylight){
+			  cmd.append(" -skylight");  
+		  }
+		  
+		 
+		cmd.append(" -min " + min);
+		cmd.append(" -max " + max);
+		switch(direction){
+			case DIR_NORTH:
+				cmd.append(" -north");
+				break;
+			case DIR_SOUTH:
+				cmd.append(" -south");
+				break;
+			case DIR_EAST:
+				cmd.append(" -east");
+				break;
+			case DIR_WEST:
+				cmd.append(" -west");
+				break;
+			default:
+				break;
+		}
+		cmd.append(" " + mapDir);
 		
-		logger.info("Going to run ["+cmd+"]");
+		logger.info("Going to run ["+cmd.toString()+"]");
 		// call the system mcmap + args
-		Process p = Runtime.getRuntime().exec(cmd);
+		Process p = Runtime.getRuntime().exec(cmd.toString());
 		
 		// when it is done get the generated image
 		Scanner sc = new Scanner(p.getInputStream());
